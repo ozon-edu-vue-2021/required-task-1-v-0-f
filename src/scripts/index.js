@@ -20,7 +20,7 @@ let loaderTimeout;
 const initialState = function () {
     action.disabled = false;
     getPictures();
-}
+};
 
 /**
  * Функция запрашивает картинки для галереи
@@ -31,9 +31,13 @@ const initialState = function () {
 const getPictures = function (page = 1, limit = 10) {
     showLoader();
     fetch(`https://picsum.photos/v2/list?page=${page};limit=${limit}`)
-        .then(function (response) {return response.json()})
-        .then(function (result) {renderPictures(result)})
-}
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (result) {
+            renderPictures(result);
+        });
+};
 
 /**
  * Функция запрашивает информацию о конкретной картинке по её id
@@ -43,9 +47,13 @@ const getPictures = function (page = 1, limit = 10) {
 const getPictureInfo = function (id = 0) {
     showLoader();
     fetch(`https://picsum.photos/id/${id}/info`)
-        .then(function (response) {return response.json()})
-        .then(function (result) {renderPopupPicture(result)})
-}
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (result) {
+            renderPopupPicture(result);
+        });
+};
 
 /**
  * Функция показывает индикатор загрузки.
@@ -53,7 +61,7 @@ const getPictureInfo = function (id = 0) {
  */
 const showLoader = function () {
     loader.style.visibility = 'visible';
-}
+};
 
 /**
  * Функция скрывает индикатор загрузки.
@@ -62,9 +70,9 @@ const showLoader = function () {
 const hideLoader = function () {
     loaderTimeout = setTimeout(function () {
         loader.style.visibility = 'hidden';
-        loaderTimeout.clearTimeout();
+        clearTimeout(loaderTimeout);
     }, 700);
-}
+};
 
 /**
  * Функция пропорционально делит размер картинки,
@@ -79,7 +87,7 @@ const cropImage = function (src, size = 2) {
     const newHeight = Math.floor(+height / size);
 
     return `https://${domain}/${key}/${id}/${newWidth}/${newHeight}`;
-}
+};
 
 /**
  * Функция копирует шаблон для каждой картинки,
@@ -104,12 +112,12 @@ const renderPictures = function (list) {
         image.src = cropImage(element.download_url, 5);
         image.alt = element.author;
         image.classList.add('preview');
-        fragment.appendChild(clone)
+        fragment.appendChild(clone);
     });
 
     container.appendChild(fragment);
     hideLoader();
-}
+};
 
 /**
  * Функция копирует шаблон для картинки в попапе,
@@ -129,17 +137,17 @@ const renderPopupPicture = function (picture) {
     link.href = picture.download_url;
 
     popupContainer.innerHTML = '';
-    popupContainer.appendChild(clone)
+    popupContainer.appendChild(clone);
     hideLoader();
     togglePopup();
-}
+};
 
 /**
  * Функция переклбчает класс открытия на попапе
  */
 const togglePopup = function () {
     popup.classList.toggle('open');
-}
+};
 
 /**
  * @type {object} MouseEvent
@@ -160,7 +168,7 @@ const actionHandler = function (evt) {
     } else {
         getPictures(nextPage);
     }
-}
+};
 
 /**
  * Обработчик события click по картинкам.
@@ -174,7 +182,7 @@ const imageHandler = function (evt) {
     if (evt.target.closest('a')) {
         getPictureInfo(evt.target.dataset.id);
     }
-}
+};
 
 action.addEventListener('click', actionHandler);
 container.addEventListener('click', imageHandler);
