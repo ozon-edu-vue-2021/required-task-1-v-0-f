@@ -179,8 +179,9 @@ const actionHandler = function (evt) {
 const imageHandler = function (evt) {
     evt.preventDefault();
 
-    if (evt.target.closest('a')) {
-        getPictureInfo(evt.target.dataset.id);
+    const imgLink = evt.target.closest('a');
+    if (imgLink) {
+        getPictureInfo(imgLink.dataset.id);
     }
 };
 
