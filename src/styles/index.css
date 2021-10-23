@@ -9,7 +9,7 @@ body {
 img {
     width: 100%;
     max-width: 100%;
-    display: bloсk;
+    display: block;
 }
 
 a {
@@ -78,7 +78,6 @@ a {
     border-radius: 6px;
     overflow: hidden;
     width: 100%;
-    min-height: 100px;
 }
 
 a:nth-child(n) {
